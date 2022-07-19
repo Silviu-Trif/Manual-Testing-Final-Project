@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "09f6fa66-38d6-4940-a382-033e48dff739",
+		"name": "OrangeHRM API Projects",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21597738"
+	},
+	"item": [
+		{
+			"name": "Authorization",
+			"item": [
+				{
+					"name": "Generate Token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"random_name\", pm.variables.replaceIn('{{$randomFullName}}'));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get the response body\r",
+									"var res_body = pm.response.json();\r",
+									"console.log(res_body);\r",
+									"console.log(res_body.access_token);\r",
+									"// set the auth token variable with the value from the response\r",
+									"pm.environment.set(\"token\", `Bearer ${res_body.access_token}`);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"client_id\":\"testing1\",\r\n    \"client_secret\":\"1111\",\r\n    \"grant_type\" : \"client_credentials\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://opensource-demo.orangehrmlive.com/index.php/oauth/issueToken",
+							"protocol": "https",
+							"host": [
+								"opensource-demo",
+								"orangehrmlive",
+								"com"
+							],
+							"path": [
+								"index.php",
+								"oauth",
+								"issueToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "GetProjects",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/project",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveProjects",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"customerId\": \"4\",\r\n            \"name\": \"Space Software Foundation\",\r\n            \"description\": \"non-profit corporation to support Space software projects\",\r\n            \"adminIDs\"  : \"1,2,3,4,5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/project",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProject",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"projectId\": \"11\",\r\n            \"customerId\": \"8\",\r\n            \"name\": \"General HR Tasks\",\r\n            \"description\": \"This is a web usability class.\",\r\n            \"admins\": {\r\n                \"employeeId\": \"7\",\r\n                \"name\": \"Paul Collings\"\r\n            },\r\n            \"activities\": [\r\n                {\r\n                    \"id\": \"75\",\r\n                    \"name\": \"Payroll Administration\",\r\n                    \"isDeleted\": \"0\"\r\n                },\r\n                {\r\n                    \"id\": \"76\",\r\n                    \"name\": \"Manage Employee Inquiries\",\r\n                    \"isDeleted\": \"0\"\r\n                },\r\n                {\r\n                    \"id\": \"77\",\r\n                    \"name\": \"HR Audit\",\r\n                    \"isDeleted\": \"0\"\r\n                },\r\n                {\r\n                    \"id\": \"78\",\r\n                    \"name\": \"Performance Evaluation\",\r\n                    \"isDeleted\": \"0\"\r\n                }\r\n            ]\r\n        }\r\n       ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/project",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"project"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

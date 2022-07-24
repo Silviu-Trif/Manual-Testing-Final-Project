@@ -9,5 +9,5 @@ Requirements Documentation: https://www.orangehrm.com/assets/Files/Complete-Admi
 
 Tools used: JIRA, Zephyr Squad, Postman, MySQL Workbench.
 
-# The final project will be split into 2 sections: Testing section and SQL section.
+** The final project will be split into 2 sections: Testing section and SQL section.**
 
